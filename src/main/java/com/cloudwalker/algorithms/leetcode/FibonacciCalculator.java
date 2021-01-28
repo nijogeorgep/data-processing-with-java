@@ -69,7 +69,7 @@ public class FibonacciCalculator {
             return 0;
         } else if (number == 1) {
             return 1;
-        } else if (fibArray[(int) number] != 0) {
+        } else if (fibArray[number] != 0) {
             return (int) fibArray[number];
         } else {
             fibValue = fibonacci(number - 1) + fibonacci(number - 2); // tail recursion
