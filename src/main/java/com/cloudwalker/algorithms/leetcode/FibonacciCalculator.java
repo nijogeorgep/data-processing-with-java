@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.cloudwalker.algorithms;
+package com.cloudwalker.algorithms.leetcode;
 
 import java.util.Scanner;
 
@@ -23,7 +23,7 @@ public class FibonacciCalculator {
 
         System.out.println("Fibonacci Series upto " + number + " numbers");
         for (int i = 1; i < number; i++) {
-            System.out.print(fibonacci(i) + " ");
+            System.out.print(fibonacciMemo(i) + " ");
         }
     }
 
@@ -55,6 +55,24 @@ public class FibonacciCalculator {
         }
 
         return fibonacci;
+    }
+
+    public static long fibArray[] = new long[1000];
+    /**
+     * Recursive Fibonacci Implementation using Memoization
+     * javabrahman.com/gen-java-programs/recursive-fibonacci-in-java-with-memoization/
+     * */
+    private static int fibonacciMemo(int number) {
+        long fibValue = 0;
+        if (number <= 2) {
+            return 1;
+        } else if (fibArray[(int) number] != 0) {
+            return (int) fibArray[number];
+        } else {
+            fibValue = fibonacci(number - 1) + fibonacci(number - 2); // tail recursion
+            fibArray[number] = fibValue;
+            return (int) fibValue;
+        }
     }
 
 }

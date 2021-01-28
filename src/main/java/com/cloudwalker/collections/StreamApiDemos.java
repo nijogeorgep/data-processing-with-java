@@ -76,7 +76,8 @@ public class StreamApiDemos {
         iteratedStream.forEach(System.out::println);
 
         String someString = "elephant";
-        long count = someString.chars().filter(ch -> ch == 'e').count();
+        long count = someString.chars().filter(ch -> ch == 'a').count();
         long count2 = someString.codePoints().filter(ch -> ch == 'e').count();
+        System.out.println(count + "--" + count2);
     }
 }
