@@ -57,14 +57,17 @@ public class FibonacciCalculator {
         return fibonacci;
     }
 
-    public static long fibArray[] = new long[1000];
+   // public static long fibArray[] = new long[1000];
     /**
      * Recursive Fibonacci Implementation using Memoization
      * javabrahman.com/gen-java-programs/recursive-fibonacci-in-java-with-memoization/
      * */
     private static int fibonacciMemo(int number) {
+        long[] fibArray = new long[number+1];
         long fibValue = 0;
-        if (number <= 2) {
+        if (number == 0) {
+            return 0;
+        } else if (number == 1) {
             return 1;
         } else if (fibArray[(int) number] != 0) {
             return (int) fibArray[number];
