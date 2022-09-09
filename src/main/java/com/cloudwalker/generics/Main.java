@@ -39,6 +39,13 @@ public class Main {
 
         // Printer<Byte> printerByteList = new Printer<>();
 
+        shout(30);
+        shout("Hellooo");
+
+    }
+
+    public static <T> void shout (T thingToShout){
+        System.out.println(thingToShout+"!!!!");
     }
 
 }

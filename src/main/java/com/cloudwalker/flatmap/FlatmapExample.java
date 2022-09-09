@@ -45,8 +45,10 @@ public class FlatmapExample {
                 line -> Pattern.compile(" ").splitAsStream(line);
 
         // Stream<String> streamOfWords = streamOfLines.flatMap(lineSplitter);
-        Stream<String> streamOfWords = streamOfLines.flatMap(lineSplitter)
-                .map(word -> word.toLowerCase()).distinct()
+        Stream<String> streamOfWords = streamOfLines
+                .flatMap(lineSplitter)
+                .map(word -> word.toLowerCase())
+                .distinct()
                 .filter(word -> word.length() == 4);
 
         System.out.println("# Words : " + streamOfWords.count());
