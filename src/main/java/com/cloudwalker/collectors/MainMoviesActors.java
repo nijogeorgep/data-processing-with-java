@@ -44,20 +44,7 @@ public class MainMoviesActors {
                 return;
             }
 
-            Movie movie = new Movie(title, Integer.parseInt(releaseYear));
-
-            for (int i = 1; i < elements.length; i++) {
-                String[] fullName = elements[1].split(",");
-                String lastName = fullName[0].trim();
-                String firstName = "";
-
-                if (fullName.length > 1) {
-                    firstName = fullName[1].trim();
-                }
-
-                Actor actor = new Actor(firstName, lastName);
-                movie.addActors(actor);
-            }
+            Movie movie = getMovie(title, releaseYear, elements);
 
             movies.add(movie);
 
@@ -107,23 +94,21 @@ public class MainMoviesActors {
         // @formatter:off
         Entry<Integer, Entry<Actor, AtomicLong>> collect = movies
                 .stream()
-                .collect(Collectors.groupingBy(movie -> movie.getReleaseYear(),
+                .collect(Collectors.groupingBy(Movie::getReleaseYear,
                         Collector.of(() -> new HashMap<Actor, AtomicLong>(), // supplier
                                 (map, movie) -> {
                                     movie.actors().forEach(
                                             actor -> map.computeIfAbsent(actor, a -> new AtomicLong()).incrementAndGet());
                                 }, // Accumulator
                                 (map1, map2) -> {
-                                    map2.entrySet().forEach(
-                                            entry2 -> map1.merge(
-                                                    entry2.getKey(),
-                                                    entry2.getValue(),
+                                    map2.forEach((key,value)->map1.merge(
+                                                    key,
+                                                    value,
                                                     (al1, al2) -> {
                                                         al1.addAndGet(al2.get());
                                                         return al1;
                                                     }
-                                            )
-                                    );
+                                            ));
                                     return map1;
                                 }, // combiner
                                 Collector.Characteristics.IDENTITY_FINISH))
@@ -131,11 +116,11 @@ public class MainMoviesActors {
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(
-                        entry -> entry.getKey(),
+                        Entry::getKey,
                         entry -> entry.getValue()
                                 .entrySet()
                                 .stream()
-                                .max(Map.Entry.comparingByValue(Comparator.comparing(longVal -> longVal.get())))
+                                .max(Map.Entry.comparingByValue(Comparator.comparing(AtomicLong::get)))
                                 .get())
                 ) //Map<Integer, Map.Entry<Actor, AtomicLong>>
                 .entrySet()
@@ -149,6 +134,24 @@ public class MainMoviesActors {
         System.out.println("# collect : " + collect);
 
         moviesStream.close();
+    }
+
+    private static Movie getMovie(String title, String releaseYear, String[] elements) {
+        Movie movie = new Movie(title, Integer.parseInt(releaseYear));
+
+        for (int i = 1; i < elements.length; i++) {
+            String[] fullName = elements[1].split(",");
+            String lastName = fullName[0].trim();
+            String firstName = "";
+
+            if (fullName.length > 1) {
+                firstName = fullName[1].trim();
+            }
+
+            Actor actor = new Actor(firstName, lastName);
+            movie.addActors(actor);
+        }
+        return movie;
     }
 
 }

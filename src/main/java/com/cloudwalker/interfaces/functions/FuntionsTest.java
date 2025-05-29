@@ -16,16 +16,16 @@ public class FuntionsTest {
      */
     public static void main(String[] args) {
         // convert centigrade to fahrenheit
-        Function<Integer, Double> centigradeToFahrenheitInt = x -> new Double((x * 9 / 5) + 32);
+        Function<Integer, Double> centigradeToFahrenheitInt = x -> ((double) (x * 9) / 5) + 32;
 
         // String to an integer
-        Function<String, Integer> stringToInt = x -> Integer.valueOf(x);
+        Function<String, Integer> stringToInt = Integer::valueOf;
 
         // Length of a String
-        Function<String, Integer> stringLength = x -> x.length();
+        Function<String, Integer> stringLength = String::length;
 
         // tests
-        System.out.println("Centigrade to Fahrenheit: " + centigradeToFahrenheitInt.apply(32));
+        System.out.println("Centigrade to Fahrenheit: " + centigradeToFahrenheitInt.apply(20));
         System.out.println("String to Int: " + stringToInt.apply("4"));
         System.out.println("Length of String :" + stringLength.apply("NIJO GEORGE PAYYAPPILLY"));
     }

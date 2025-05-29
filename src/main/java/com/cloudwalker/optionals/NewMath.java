@@ -34,7 +34,7 @@ public class NewMath {
         // @formatter:off
         ThreadLocalRandom.current().doubles(10_000)
                 .boxed()
-                .forEach(null);
+                .forEach(System.out::println);
         // @formatter:on
 
 
@@ -43,18 +43,18 @@ public class NewMath {
                 //.parallel()
                 .boxed()
                 .limit(1000)
-                .collect(Collectors.toList());
+                .toList();
         // @formatter:on
         System.out.println(doubles.size());
 
         // @formatter:off
         Function<Double, Stream<Double>> inSqrt = d -> NewMath.inv(d)
-                .flatMap(d1 -> NewMath.sqrt(d1))
-                .map(d2 -> Stream.of(d2))
-                .orElseGet(() -> Stream.empty());
+                .flatMap(NewMath::sqrt)
+                .map(Stream::of)
+                .orElseGet(Stream::empty);
 
         // @formatter:on
-        results = doubles.stream().flatMap(inSqrt).collect(Collectors.toList());
+        results = doubles.stream().flatMap(inSqrt).toList();
 
         System.out.println(results.size());
 

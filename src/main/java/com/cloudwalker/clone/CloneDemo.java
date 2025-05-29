@@ -2,7 +2,7 @@ package com.cloudwalker.clone;
 
 public class CloneDemo {
 
-    public static void main(String args[]) throws CloneNotSupportedException {
+    public static void main(String[] args) throws CloneNotSupportedException {
 
         Department dept = new Department(1, "Human Resource");
 

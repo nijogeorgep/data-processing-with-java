@@ -47,11 +47,18 @@ public class FlatmapExample {
         // Stream<String> streamOfWords = streamOfLines.flatMap(lineSplitter);
         Stream<String> streamOfWords = streamOfLines
                 .flatMap(lineSplitter)
-                .map(word -> word.toLowerCase())
+                .map(String::toLowerCase)
                 .distinct()
                 .filter(word -> word.length() == 4);
 
         System.out.println("# Words : " + streamOfWords.count());
+
+        /*streamOfStreams.flatMap(Function.identity())
+                .flatMap(line -> Pattern.compile(" ").splitAsStream(line))
+                .map(String::toLowerCase)
+                .distinct()
+                .filter(word -> word.length() == 4)
+                .forEach(System.out::println);*/
 
     }
 
